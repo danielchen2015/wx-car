@@ -1,0 +1,10 @@
+/* pages/write/write.wxss */
+.weui-ft{
+  color: black;
+}
+.weui-p-t{
+  padding-top: 10px;
+}
+.redBar{
+  color: red;
+}

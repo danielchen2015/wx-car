@@ -1,0 +1,54 @@
+<!--pages/home/home.wxml-->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+  <block wx:for="{{imgUrls}}" wx:key="index">
+    <swiper-item>
+      <image mode='aspectFill' src="{{RES_HOST}}{{item}}" class="slide-image" />
+    </swiper-item>
+  </block>
+</swiper>
+<view class='content'>
+  <view class='c-term'>
+    <input type='text' value='{{pricefrom}}' class='term-input-m' type="number" bindblur="bePrice"/>
+    <text>~</text>
+    <input type='text' value='{{priceto}}' class='term-input-m' type="number" bindblur="ovPrice"/>
+    <text class='term-text'>万</text>
+    <picker mode="date" value="{{bedate}}" bindchange="bindBeDateChange" fields="month">
+      <view class="picker">
+        <input type='text' disabled value="{{bedate?bedate:'开始时间'}}" class='term-input-d' />
+      </view>
+    </picker>
+    <text>~</text>
+    <picker mode="date" value="{{ladate}}" bindchange="bindLaDateChange" fields="month">
+      <view class="picker">
+        <input type='text' disabled value="{{ladate?ladate:'结束时间'}}" class='term-input-d' />
+      </view>
+    </picker>
+  </view>
+  <view class='c-term'>
+    <input class='search-input' bindblur='getmodels' />
+    <button size="mini" bindtap='searchCar'  class='bg-blue s-btn'>搜索</button>
+  </view>
+  <view class='c-car'  wx:for="{{car}}" wx:key="index" data-id="{{item.id}}" bindtap='gotoCar'>
+    <view class='c-term'>
+      <image class='car-img' src='{{RES_HOST}}{{item.arr[0]}}'></image>
+      <view class='car-d'>
+        <text class='car-item'>编号：{{item.code}}</text>
+        <text class='car-item'>车辆型号：{{item.models}}</text>
+        <text class='car-item'>上牌时间：{{item.proddateyear}}-{{item.boarddatemonth}}</text>
+        <text class='car-item'>实际里程：{{item.realmileage}}万公里</text>
+        <text class='car-item car-active'>一口价：{{item.fixprice}}万元</text>
+      </view>
+    </view>
+    <view class='car-b'>
+      <text class='car-item'>人气指数：{{item.popularity_index}}</text>
+      <text class='car-item'>拨号人数：{{item.dial_index}}</text>
+      <text class='car-item'>状态：<text class='car-active'>{{item.status?"在售":"待审核"}}</text></text>
+    </view>
+  </view>
+</view>
+<view class='c-term' wx:if="{{false}}">
+<button size='mini' disabled='true'>上一页</button>
+<button size='mini' type='primary'>下一页</button>
+<input type='text' class='page-i' size="size"></input>
+<button size='mini'>跳转</button>
+</view>

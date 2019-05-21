@@ -1,0 +1,77 @@
+<!--pages/home/car/car.wxml-->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" class='car-swiper'>
+  <block wx:for="{{imgUrls}}" wx:key="index">
+    <swiper-item>
+      <image src="{{https}}{{item}}" class="slide-image" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
+<view class='car-content'>
+  <text class='car-title'>价格：{{car[0].price}}万元 编码({{car[0].code}}）</text>
+  <view class='car-c'>
+    <text class='car-t'>[车辆款型]</text>
+    <text class='car-d'>{{car[0].models}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[上牌日期]</text>
+    <text class='car-d'>{{car[0].boarddateyear}} - {{car[0].boarddatemonth}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[出厂日期]</text>
+    <text class='car-d'>{{car[0].proddateyear}} - {{car[0].proddatemonth}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[实际里程]</text>
+    <text class='car-d'>{{car[0].realmileage}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[车况描述]</text>
+    <text class='car-d'>{{car[0].condition}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[新车指导价]</text>
+    <text class='car-d'>{{car[0].guideprice}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[车辆配置]</text>
+    <text class='car-d'>{{car[0].configuration}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[汽车排量]</text>
+    <text class='car-d'>{{car[0].displacement}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[车所在地]</text>
+    <text class='car-d'>{{car[0].loc_city}}-{{car[0].loc_area}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[过户次数]</text>
+    <text class='car-d'>{{car[0].transfer_times}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[人气]</text>
+    <text class='car-d'>{{car[0].popularity_index}}</text>
+  </view>
+  <view class='car-c'>
+    <text class='car-t'>[会员积分]</text>
+    <text class='car-d'>{{car[0].score}}</text>
+  </view>
+  <view class='img' wx:if="{{car.self=='no'}}">
+    <image src='{{https+car.weixinimg1}}' mode="widthFix"></image>
+    <image src='{{https+car.weixinimg2}}' mode="widthFix"></image>
+  </view>
+  <view class='img' wx:else>
+    <image src='{{https+car[0].weixinimg}}' mode="widthFix" style='margin:0'></image>
+  </view>
+</view>
+<button size='mini' class='link-btn bg-yellow' wx:if="{{roleid?true:false}}" bindtap='handReview'>审核</button>
+<view class='btn'>
+  <button size='mini' class='btn-text bg-blue' bindtap='handImg'>复制文字</button>
+  <button size='mini' class='btn-text' open-type="share">转发好友</button>
+</view>
+<button size='mini' class='link-btn' bindtap='callUser' data-phone="{{car[0].contacttel}}">联系卖家</button>
+<view class='btn'>
+  <button size='mini' class='btn-text' bindtap='handgoCar'>我要发布车源</button>
+  <button size='mini' class='btn-text' type='warn' bindtap='allCar' >全部车源</button>
+</view>
+<image src='/images/imgurl.jpeg' class='ad-img'></image>

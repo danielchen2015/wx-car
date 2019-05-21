@@ -1,0 +1,2 @@
+<canvas canvas-id="shareCanvas" style="width:500px;height:500px"></canvas>
+<button bindtap='save'>保存到手机</button>

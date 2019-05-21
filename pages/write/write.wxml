@@ -1,0 +1,122 @@
+<!--pages/write/write.wxml-->
+<view class="cu-bar bg-white solid-bottom">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text> 请你填写售卖车辆的信息
+  </view>
+</view>
+<form>
+  <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>价格</view>
+		<input type="digit" value="{{price}}" placeholder="请输入批发价格" bindinput="handprice"></input>
+		<text>万元</text>
+	</view>
+  <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>车辆款型</view>
+		<input placeholder="如：大众万腾1.8T领先型" value="{{models}}" bindinput="handmodels"></input>
+	</view>
+  <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>上牌日期</view>
+		<picker mode="date" fields="month" bindchange="topTimeChange" mode="date" start="{{startTime}}" end="{{endTime}}">
+			<view class="picker">
+				{{topSelectTime ||'请选择'}}
+			</view>
+		</picker>
+	</view>
+   <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>出厂日期</view>
+		<picker mode="date" fields="month" start="{{startTime}}" end="{{endTime}}" bindchange="outTimeChange">
+			<view class="picker">
+				{{outSelectTime||'请选择'}}
+			</view>
+		</picker>
+	</view>
+   <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>实际里程</view>
+		<input type="digit" placeholder="请输入万公里" bindinput="handrealmileage" value="{{realmileage}}"></input>
+		<text>万公里</text>
+	</view>
+  <view class="cu-form-group align-start">
+		<view class="title">车况描述</view>
+		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaBInput" placeholder="请结合4S店的保养记录如实描述车况，描述不正确会影响你的诚信" bindinput="handcondition" value="{{condition}}"></textarea>
+	</view>
+   <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>联系电话</view>
+		<input type="number" placeholder="请输入联系电话" bindinput="handcontacttel" value="{{contacttel}}"></input>
+	</view>
+  <!--  图片上传   -->
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			<text class="redBar">*</text>车辆照片
+		</view>
+		<view class="action">
+			{{imgList.length}}/9
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{RES_HOST}}{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<9}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+  <!-- 微信 -->
+  	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+    <text class="redBar">*</text>
+			您的微信二维码
+		</view>
+		<view class="action">
+			{{imgList1.length}}/1
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-4 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList1}}" wx:key="{{index}}" bindtap="ViewImage1" data-url="{{imgList1[index]}}">
+				<image src='{{RES_HOST}}{{imgList1[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg1" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage1" wx:if="{{imgList1.length<1}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+
+  <!--  -->
+   <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>新车指导</view>
+		<input type="digit" placeholder="请输入新车指导价" value="{{guideprice}}" bindinput="handguideprice"></input>
+		<text>万元</text>
+	</view>
+  <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>汽车排量</view>
+		<input value="{{displacement}}" placeholder="请输入汽车排量" bindinput="handdisplacement"></input>
+	</view>
+   <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>车辆配置</view>
+		<input placeholder="如：天窗,自动挡" bindinput="handconfiguration" value="{{configuration}}"></input>
+	</view>
+   <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>车所在地</view>
+		<picker range-key="province" mode="multiSelector" bindchange="MultiChange" bindcolumnchange="MultiColumnChange" value="{{multiIndex}}"
+		 range="{{multiArray}}">
+			<view class="picker">
+		{{multiArray[0][multiIndex[0]].province}}，{{multiArray[1][multiIndex[1]].province}}，{{multiArray[2][multiIndex[2]].province}}
+			</view>
+		</picker>
+	</view>
+  <view class="cu-form-group">
+		<view class="title"><text class="redBar">*</text>过户几次</view>
+		<input type="number" placeholder="请输入过户次数" bindinput="handtransfer_times" value="{{transfer_times}}"></input>
+	</view>
+  <view class="padding-xl">
+    <button class="cu-btn block bg-blue margin-tb-sm lg" bindtap="submitTab">提交</button>
+  </view>
+</form>

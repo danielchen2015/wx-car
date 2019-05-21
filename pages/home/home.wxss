@@ -1,0 +1,100 @@
+/* pages/home/home.wxss */
+
+.slide-image {
+  width: 100%;
+}
+
+.content {
+  margin: 15px;
+}
+
+.c-term {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.term-input-m {
+  width: 100rpx;
+  height: 60rpx;
+  text-align: center;
+  padding: 0 5rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.term-text {
+  margin: 0 5px;
+}
+
+.term-input-d {
+  width: 180rpx;
+  height: 60rpx;
+  text-align: center;
+  padding: 0 5rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.search-input {
+  background-color: #fff;
+  width: 420rpx;
+  height: 60rpx;
+  padding: 0 10px;
+}
+
+.s-btn {
+  margin-left: 20px;
+}
+
+.c-car {
+  background-color: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.19);
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.c-car .c-term {
+  padding: 0 10px;
+}
+
+.car-img {
+  width: 240rpx;
+  height: 240rpx;
+  margin-right: 15px;
+}
+
+.car-d {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 12px;
+  height: 240rpx;
+  justify-content: space-between;
+}
+
+.car-active {
+  color: red;
+}
+
+.car-b {
+  padding: 10px 10px 0;
+  border-top: 1px solid rgb(233, 233, 233);
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+}
+
+.page-i {
+  border: 1px solid rgba(187, 185, 185, 0.8);
+  border-radius: 4px;
+  width: 200rpx;
+  background-color: #fff;
+  text-align: center;
+  height: 60rpx;
+}

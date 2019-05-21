@@ -1,0 +1,48 @@
+<!--pages/user/user.wxml-->
+<view class='{{showOperation?"active-bg":""}}'>
+  <view wx:if="{{userInfoBtn}}">
+    <view class="padding-xl">
+      <button class="cu-btn block bg-blue margin-tb-sm lg" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo">
+        <text class="iconfont-spin"></text> 我要发布车辆
+      </button>
+    </view>
+  </view>
+  <view class='content' wx:else>
+
+    <view class='c-term' wx:if="{{false}}">
+      <input class='search-input' />
+      <button size="mini" class='s-btn bg-blue'>搜索</button>
+    </view>
+    <view class='c-car' wx:for="{{car}}" wx:key="index">
+      <view class='c-term' bindtap='handInfo'>
+        <image class='car-img' src='{{RES_HOST}}{{item.arr[0]}}'></image>
+        <view class='car-d'>
+          <text class='car-item'>编号：{{item.code}}</text>
+          <text class='car-item'>车辆型号：{{item.models}}</text>
+          <text class='car-item'>上牌时间：{{item.proddateyear}}-{{item.boarddatemonth}}</text>
+          <text class='car-item'>实际里程：{{item.realmileage}}万公里</text>
+          <text class='car-item car-active'>一口价：{{item.fixprice}}万元</text>
+        </view>
+      </view>
+      <view class='car-b'>
+      <text class='car-item'>人气指数：{{item.popularity_index}}</text>
+      <text class='car-item'>拨号人数：{{item.dial_index}}</text>
+      <text class='car-item'>状态：<text class='car-active'>{{item.status==2?"在售":"待审核"}}</text></text>
+      </view>
+      <view class='c-term'  wx:if="{{roleid==2?true:false}}">
+        <view class='car-btn' bindtap="showOperation" data-id="{{item.id}}">操作</view>
+        <!-- <view class='car-btn'>删除</view> -->
+      </view>
+    </view>
+  </view>
+  <view class='bg' wx:if="{{showOperation}}"></view>
+  <view class='footer' wx:if="{{showOperation}}">
+    <view class='operation'>
+      <view wx:for="{{operation}}" class='oper-item'>
+        <image src='{{item.img}}'></image>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+    <button bindtap='close'>关闭</button>
+  </view>
+</view>

@@ -3,7 +3,7 @@
   <view wx:if="{{userInfoBtn}}">
     <view class="padding-xl">
       <button class="cu-btn block bg-blue margin-tb-sm lg" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo">
-        <text class="iconfont-spin"></text> 我要发布车辆
+        <text class="iconfont-spin"></text> 登录并发布车辆
       </button>
     </view>
   </view>

@@ -1,7 +1,7 @@
 <!--pages/home/car/car.wxml-->
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" class='car-swiper'>
   <block wx:for="{{imgUrls}}" wx:key="index">
-    <swiper-item>
+    <swiper-item bindtap="viewImage" data-img="{{https}}{{item}}">
       <image src="{{https}}{{item}}" class="slide-image" height="150" />
     </swiper-item>
   </block>
@@ -57,12 +57,25 @@
     <text class='car-d'>{{car[0].score}}</text>
   </view>
   <view class='img' wx:if="{{car.self=='no'}}">
-    <image src='{{https+car.weixinimg1}}' mode="widthFix"></image>
-    <image src='{{https+car.weixinimg2}}' mode="widthFix"></image>
+    <view class='item' bindtap='viewWeixin' data-img="{{https+car.weixinimg1}}">
+      <image src='{{https+car.weixinimg1}}' mode="widthFix"></image>
+      <text style="white-space:pre-line">兄弟情车联盟创始人</text>
+      <text style="white-space:pre-line;font-size:25rpx;color:red;">长按保存扫码后审核入群</text>
+    </view>
+    <view class='item' bindtap='viewWeixin' data-img="{{https+car.weixinimg2}}">
+      <image src='{{https+car.weixinimg2}}' mode="widthFix"></image>
+      <text style="white-space:pre-line;">兄弟情车联盟客服一</text>
+      <text style="white-space:pre-line;font-size:25rpx;color:red;">长按保存扫码后审核入群</text>
+    </view>
   </view>
   <view class='img' wx:else>
     <image src='{{https+car[0].weixinimg}}' mode="widthFix" style='margin:0'></image>
   </view>
+</view>
+<view class='footer-text'>
+  <view>兄弟情车联盟</view>
+  <view>专注精品二手车 一站式贴心服务 </view>
+  <view>让买卖二手车 更规范 更简单 更放心 </view>
 </view>
 <button size='mini' class='link-btn bg-yellow' wx:if="{{roleid?true:false}}" bindtap='handReview'>审核</button>
 <view class='btn'>
@@ -72,6 +85,7 @@
 <button size='mini' class='link-btn' bindtap='callUser' data-phone="{{car[0].contacttel}}">联系卖家</button>
 <view class='btn'>
   <button size='mini' class='btn-text' bindtap='handgoCar'>我要发布车源</button>
-  <button size='mini' class='btn-text' type='warn' bindtap='allCar' >全部车源</button>
+  <button size='mini' class='btn-text' type='warn' bindtap='allCar'>全部车源</button>
 </view>
-<image src='/images/imgurl.jpeg' class='ad-img'></image>
+
+<image mode='widthFix' src='/images/imgurl.png' class='ad-img'></image>

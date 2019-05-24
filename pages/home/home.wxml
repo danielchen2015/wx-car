@@ -1,8 +1,8 @@
 <!--pages/home/home.wxml-->
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
   <block wx:for="{{imgUrls}}" wx:key="index">
-    <swiper-item>
-      <image mode='aspectFill' src="{{RES_HOST}}{{item}}" class="slide-image" />
+    <swiper-item bindtap="viewImage" data-img="{{RES_HOST}}{{item}}">
+      <image mode='widthFix' src="{{RES_HOST}}{{item}}" class="slide-image" />
     </swiper-item>
   </block>
 </swiper>

@@ -65,7 +65,7 @@ Page({
   onShow: function () {
     if (!app.globalData.OPEN_ID){
       wx.switchTab({
-        url: '/pages/user/user',
+        url: '/pages/user/user'
       })
     }
   },

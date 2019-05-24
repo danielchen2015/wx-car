@@ -23,7 +23,8 @@ Page({
     timeto: '',
     models: '',
     self: '',
-    RES_HOST: urlApi.RES_HOST
+    RES_HOST: urlApi.RES_HOST,
+    urls:""
   },
 
   /**
@@ -80,6 +81,13 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  //图片
+  viewImage(e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.img, // 当前显示图片的http链接
+      urls: this.data.urls // 需要预览的图片http链接列表
+    })
   },
   // 选择开始日期
   bindBeDateChange(e) {
@@ -221,9 +229,17 @@ Page({
       success: function(res){
         let { resultCode, resultMsg} = res;
         if (resultCode == 200){
-          that.setData({
-            imgUrls: resultMsg.arr
+         
+          let imgList = resultMsg.arr;
+          let urls = [];
+          imgList.map((item)=>{
+            urls.push(urlApi.RES_HOST+item)
           })
+          that.setData({
+            imgUrls: resultMsg.arr,
+            urls:urls
+          })
+
         }
       },
       fail: function(){

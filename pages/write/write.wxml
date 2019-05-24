@@ -97,7 +97,7 @@
 	</view>
   <view class="cu-form-group">
 		<view class="title"><text class="redBar">*</text>汽车排量</view>
-		<input value="{{displacement}}" placeholder="请输入汽车排量" bindinput="handdisplacement"></input>
+		<input type="digit" value="{{displacement}}" placeholder="请输入汽车排量" bindinput="handdisplacement"></input>
 	</view>
    <view class="cu-form-group">
 		<view class="title"><text class="redBar">*</text>车辆配置</view>

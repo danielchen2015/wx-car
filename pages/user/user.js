@@ -121,7 +121,6 @@ Page({
     let that = this;
     if (e.detail){
       let { encryptedData, iv,} = e.detail;
-      console.log("e.detail", e.detail)
       http({
         url:"/api/User/loginWxxcx",
         data:{
@@ -154,16 +153,9 @@ Page({
       success: function(res){
         let { resultCode, resultMsg } = res;
         if (resultCode == 200){
-
           that.getUerInfo(id)
-          wx.switchTab({
-            url: '/pages/write/write',
-          })
         }else{
           that.getUerInfo(id)
-          wx.switchTab({
-            url: '/pages/write/write',
-          })
       
         }    
       }
@@ -196,7 +188,6 @@ Page({
 
   },
   showOperation(e){
-  
     wx.navigateTo({
       url: '/pages/home/car/car?id=' + e.currentTarget.dataset.id + '&roleid=' + this.data.roleid
     })

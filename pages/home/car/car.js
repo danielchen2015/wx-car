@@ -34,7 +34,8 @@ Page({
     }else{
       this.setData({
         roleid: "",
-        id: ""
+        id: "",
+        urlPics:""
       })
     }
     this.bindcar(options.id)
@@ -88,13 +89,26 @@ Page({
   onShareAppMessage: function() {
 
   },
+  //浏览图片
+  viewImage(e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.img, // 当前显示图片的http链接
+      urls: this.data.urlPics || [] // 需要预览的图片http链接列表
+    })
+  },
+  viewWeixin(e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.img, // 当前显示图片的http链接
+      urls: [e.currentTarget.dataset.img]
+    })
+  },
   //车辆详情
   bindcar(id) {
     let that = this;
     http({
       url: "api/vehicle/getonevehicleinfo",
       data: {
-        openid: "ozfv9447vCxnVCygkLjw7taxbt4I",
+        openid: app.globalData.OPEN_ID,
         id:id
       },
       success: function (res) {
@@ -105,6 +119,15 @@ Page({
             car: resultMsg,
             imgUrls: arrImg
           })
+          if (arrImg.length){
+            let urls = [];
+            arrImg.map((item)=>{
+              urls.push(https.RES_HOST+item)
+            })
+            that.setData({
+              urlPics: urls
+            })
+          }
         }
       
       },

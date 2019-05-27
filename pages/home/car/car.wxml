@@ -77,7 +77,10 @@
   <view>专注精品二手车 一站式贴心服务 </view>
   <view>让买卖二手车 更规范 更简单 更放心 </view>
 </view>
-<button size='mini' class='link-btn bg-yellow' wx:if="{{roleid?true:false}}" bindtap='handReview'>审核</button>
+<view class='btn'>
+<button size='mini' class='btn-text bg-yellow' wx:if="{{roleid?true:false}}" bindtap='handReview'>审核通过</button>
+<button size='mini' class='btn-text bg-yellow' wx:if="{{roleid?true:false}}" bindtap='handNoReview'>审核不通过</button>
+</view>
 <view class='btn'>
   <button size='mini' class='btn-text bg-blue' bindtap='handImg'>复制文字</button>
   <button size='mini' class='btn-text' open-type="share">转发好友</button>

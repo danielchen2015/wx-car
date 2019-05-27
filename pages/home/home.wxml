@@ -42,7 +42,7 @@
     <view class='car-b'>
       <text class='car-item'>人气指数：{{item.popularity_index}}</text>
       <text class='car-item'>拨号人数：{{item.dial_index}}</text>
-      <text class='car-item'>状态：<text class='car-active'>{{item.status?"在售":"待审核"}}</text></text>
+      <text class='car-item'>状态：<text wx:if="{{item.status==2}}" class='car-active'>在售</text><text class='car-close' wx:elif="{{item.status==4}}">已售</text><text class='car-active' wx:else>待审核</text></text>
     </view>
   </view>
 </view>

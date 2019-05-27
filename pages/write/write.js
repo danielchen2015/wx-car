@@ -5,6 +5,8 @@ var Base64 = require('../../utils/base64.js').Base64;
 var Bei = 110000;
 var Bei_num = 110100;
 const app = getApp();
+
+
 Page({
 
   /**
@@ -47,7 +49,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.getauth();
+    // this.getauth()
     this.getprovince();
     
   },
@@ -63,10 +65,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!app.globalData.OPEN_ID){
-      wx.switchTab({
-        url: '/pages/user/user'
-      })
+    if (!wx.getStorageSync("phone")){
+      setTimeout(()=>{
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
+      },500)
+     
     }
   },
 
@@ -321,11 +326,13 @@ Page({
         // console.log(resp)
         // console.log(i);
         //这里可能有BUG，失败也会执行这里,所以这里应该是后台返回过来的状态码为成功时，这里的success才+1 
-        let { statusCode, data } = resp
+        let { statusCode, data } = resp;
         if (statusCode == 200) {
           success++;
-          let { resultMsg } = JSON.parse(data);
-          that.data.imgList.push(resultMsg.imgName);
+          let str = data.split(",")[2].split(":")[1];
+          let newStr = str.replace("}}", "");
+          let okStr = newStr.replace(/^\"|\"$/g, "");
+          that.data.imgList.push(okStr);
           that.setData({
             imgList: that.data.imgList
           })
@@ -516,10 +523,13 @@ Page({
       filePath: data,
       name: 'file',
       success: function (res) {
-        //打印
-        let { resultCode, resultMsg } = JSON.parse(res.data);
-        if (resultCode == 200) {
-          that.data.imgList1.push(resultMsg.imgName);
+        console.log("res", res);
+        let { statusCode,data} = res;
+        if (statusCode == 200){
+          let str = data.split(",")[2].split(":")[1];
+          let newStr = str.replace("}}", "");
+          let okStr = newStr.replace(/^\"|\"$/g, "");
+          that.data.imgList1.push(okStr);
           that.setData({
             imgList1: that.data.imgList1
           })
@@ -609,7 +619,7 @@ Page({
       loc_city: this.data.loc_city,
       loc_area: this.data.loc_area,
       transfer_times: this.data.transfer_times,
-      openid: app.globalData.OPEN_ID,
+      openid: wx.getStorageSync("OPEN_ID"),
     }
     http({
       url:"/api/vehicle/add",
@@ -671,47 +681,5 @@ Page({
         console.log("err",err);
       }
     })
-  },
-  //授权
-  getauth(){
-    let that = this;
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              //从数据库获取用户信息
-              // that.queryUsreInfo();
-              //用户已经授权过
-              // wx.switchTab({
-              //   url: '/pages/write/write'
-              // })
-            }
-          });
-        }else{
-          wx.switchTab({
-                url: '/pages/user/user'
-          })
-        }
-      }
-    })
-  },
-  //获取用户信息接口
-  queryUsreInfo: function (openid, mobileno) {
-      http({
-        url:"/api/User/info",
-        data:{
-          openid,
-          mobileno
-        },
-        success: function(res){
-            console.log("res",res);
-          // getApp().globalData.userInfo = res.data;
-        },
-        fail: function(err){
-          console.log("err",err);
-        }
-      })
   }
 })

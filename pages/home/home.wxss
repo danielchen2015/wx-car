@@ -82,6 +82,9 @@
   color: red;
 }
 
+.car-close{
+  color:green;
+}
 .car-b {
   padding: 10px 10px 0;
   border-top: 1px solid rgb(233, 233, 233);

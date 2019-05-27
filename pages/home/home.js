@@ -92,12 +92,10 @@ Page({
   // 选择开始日期
   bindBeDateChange(e) {
     let timefrom = this.datetime_to_unix(e.detail.value)
-    console.log(timefrom)
     this.setData({
       timefrom: timefrom,
       bedate:e.detail.value
     })
-    console.log("this", this.data.timefrom)
   },
   //选择结束日期
   bindLaDateChange(e) {
@@ -126,7 +124,6 @@ Page({
       })
       return false
     }
-    console.log(timeto)
     this.setData({
       timeto: timeto,
       ladate:e.detail.value
@@ -135,16 +132,18 @@ Page({
   //车辆列表
   bindcar(){
     let that = this;
+    let status = 2;//wx.getStorageSync("roleid") == 1?2:1;
     http({
       url: "/api/vehicle/getvehicleinfo",
-      data:{
-        status: 2
+      data: {
+        openid: wx.getStorageSync("OPEN_ID"),
+        status:status
       },
       success: function (res) {
         that.setData({
           car:res.resultMsg
         })
-        console.log(res.resultMsg)
+        
       },
       fail: function (err) {
         console.log("err", err);
@@ -152,36 +151,34 @@ Page({
     })
   },
   bePrice(e) {
-    console.log(e.detail.value)
     this.setData({
       pricefrom: e.detail.value
     })
   },
   ovPrice(e) {
-    console.log(e.detail.value)
     this.setData({
       priceto: e.detail.value
     })
   },
   getmodels(e) {
-    console.log(e.detail.value)
     this.setData({
       models: e.detail.value
     })
   },
   searchCar(){
     let that = this;
+    let status = 2;//wx.getStorageSync("roleid") == 1 ? 2 : 1;
     http({
       url: "/api/vehicle/getvehicleinfo",
       data: {
-        openid: app.globalData.OPEN_ID,
+        openid: wx.getStorageSync("OPEN_ID"),
         pricefrom: that.data.pricefrom,
         priceto: that.data.priceto,
         timefrom: that.data.timefrom,
         timeto: that.data.timeto,
         models: that.data.models,
         self: that.data.self,
-        status:2
+        status:status
       },
       success: function (res) {
         let { resultCode, resultMsg } = res;
@@ -200,7 +197,6 @@ Page({
             }
           })
         }
-        console.log("res", res)
       },
       fail: function (err) {
         console.log("err", err);
@@ -211,7 +207,6 @@ Page({
     var tmp_datetime = datetime.replace(/:/g, '-');
     tmp_datetime = tmp_datetime.replace(/ /g, '-');
     var arr = tmp_datetime.split("-");
-    console.log(arr)
     var now = new Date(Date.UTC(arr[0], arr[1] - 1));
     return parseInt(now.getTime() / 1000);
   },

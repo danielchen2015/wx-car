@@ -108,7 +108,7 @@ Page({
     http({
       url: "api/vehicle/getonevehicleinfo",
       data: {
-        openid: app.globalData.OPEN_ID,
+        openid: wx.getStorageSync("OPEN_ID"),
         id:id
       },
       success: function (res) {
@@ -171,7 +171,7 @@ Page({
           wx.showModal({
             showCancel: false,
             title: '提示',
-            content: '审核成功',
+            content: '操作成功',
             success(res) {
               if (res.confirm) {
                 wx.switchTab({
@@ -184,7 +184,46 @@ Page({
           wx.showModal({
             showCancel: false,
             title: '提示',
-            content: '审核失败',
+            content: '操作失败',
+            success(res) {
+              if (res.confirm) {
+
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  //审核不通
+  handNoReview(){
+    let that = this;
+    http({
+      url: "/api/vehicle/updatestatus",
+      data: {
+        id: that.data.id,
+        status: 3
+      },
+      success: function (res) {
+        let { resultCode } = res;
+        if (resultCode == 200) {
+          wx.showModal({
+            showCancel: false,
+            title: '提示',
+            content: '操作成功',
+            success(res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: '/pages/home/home',
+                })
+              }
+            }
+          })
+        } else {
+          wx.showModal({
+            showCancel: false,
+            title: '提示',
+            content: '操作失败',
             success(res) {
               if (res.confirm) {
 

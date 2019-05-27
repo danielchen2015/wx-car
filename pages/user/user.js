@@ -8,9 +8,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    roleid:"",
+    roleid: "" || wx.getStorageSync("roleid"),
     car:[],
     userInfoBtn: true,
+    isPhoneBtn:false,
     showOperation:false,
     operation: [{
       name: "朋友圈",
@@ -78,8 +79,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    if (!this.data.userInfoBtn){
+    if (wx.getStorageSync("phone")){
+      this.setData({
+        userInfoBtn:false
+      })
       this.bindcar();
+    }else{
+      this.setData({
+        userInfoBtn: true
+      })
+
     }
   },
 
@@ -117,6 +126,7 @@ Page({
   onShareAppMessage: function() {
 
   },
+  //授权登录
   getUserInfo: function (e) {
     let that = this;
     if (e.detail){
@@ -133,7 +143,12 @@ Page({
           if (resultCode == 0){
             let { openId } = resultMsg;
             getApp().globalData.OPEN_ID = openId;
-            that.addUser(openId);
+            wx.setStorageSync("OPEN_ID", openId);
+            wx.setStorageSync("session_key",resultMsg.session_key);
+            wx.setStorageSync("nickName", resultMsg.nickName);
+            that.setData({
+              isPhoneBtn: true
+            })
           }
         }
       })
@@ -141,43 +156,68 @@ Page({
 
     }
   },
+  //获取手机号
+  getPhoneNumber: function(e){
+    let that = this;
+    http({
+      url:"/api/User/getUserPhone",
+      data:{
+        session_key: wx.getStorageSync("session_key"),
+        iv:e.detail.iv,
+        encryptedData: e.detail.encryptedData
+      },
+      success: function(res){
+        let { resultCode, resultMsg } = res;
+        if (resultCode == 0){
+          let phone = resultMsg.phoneNumber;
+          wx.setStorageSync("phone", phone);
+          that.addUser();
+        }
+      },
+      fail: function(err){
+        console.log("err",err);
+      }
+    })
+  },
   //添加用户
-  addUser: function(id){
+  addUser: function(){
     let that = this;
     http({
       url: "/api/User/add",
       method:"POST",
       data:{
-        openid: id
+        openid: wx.getStorageSync("OPEN_ID"),
+        mobileno: wx.getStorageSync("phone"),
+        username: wx.getStorageSync("nickName"),
       },
       success: function(res){
         let { resultCode, resultMsg } = res;
         if (resultCode == 200){
-          that.getUerInfo(id)
+          that.getUerInfo()
         }else{
-          that.getUerInfo(id)
-      
+          that.getUerInfo()
         }    
       }
     })
   },
   //获取用户信息
-  getUerInfo(id){
+  getUerInfo(){
     let that = this;
     http({
       url:"/api/User/info",
       data:{
-        openid: id
+        openid: wx.getStorageSync("OPEN_ID"),
+        mobileno: wx.getStorageSync("phone")
       },
       success: function(res){
         let { resultCode, resultMsg } = res;
         if (resultCode == 200) {
           let {roleid, mobileno } = resultMsg;
-          getApp().globalData.PHONE = mobileno;
           that.setData({
             roleid: roleid,
             userInfoBtn: false
           })
+          wx.setStorageSync("roleid", roleid);
           that.bindcar();
         }    
       }

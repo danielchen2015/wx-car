@@ -11,8 +11,9 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1296db",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTitleText": "兄弟情车联盟",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
   },
   "usingComponents": {},
   "tabBar": {

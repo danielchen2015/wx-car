@@ -2,6 +2,8 @@
 import http from '../../utils/http.js';
 import urlApi from '../../utils/const.js'
 let app = getApp();
+var pagenumber = 1;
+
 Page({
 
   /**
@@ -24,7 +26,10 @@ Page({
     models: '',
     self: '',
     RES_HOST: urlApi.RES_HOST,
-    urls:""
+    urls:"",
+    page: 0,
+    isPrePage: false,
+    pagenumber: 1
   },
 
   /**
@@ -66,14 +71,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    
   },
 
   /**
@@ -134,10 +139,11 @@ Page({
     let that = this;
     let status = 2;//wx.getStorageSync("roleid") == 1?2:1;
     http({
-      url: "/api/vehicle/getvehicleinfo",
+      url: "/api/vehicle/getvehicleinfoNew",
       data: {
         openid: wx.getStorageSync("OPEN_ID"),
-        status:status
+        status:status,
+        page: wx.getStorageSync("PAGENUMBER") == '' ? 1 : wx.getStorageSync("PAGENUMBER")
       },
       success: function (res) {
         that.setData({
@@ -149,6 +155,14 @@ Page({
         console.log("err", err);
       }
     })
+  },
+  getPageNumber(e) {
+    let pagenumber = e.detail.value;
+    this.setData({
+      pagenumber : e.detail.value
+    })
+    wx.setStorageSync("PAGENUMBER", pagenumber);
+    console.log(pagenumber)
   },
   bePrice(e) {
     this.setData({
@@ -241,6 +255,41 @@ Page({
 
       }
     })
-  }
+  },
+  //上一页
+  PrePageBtn() {
+    pagenumber = pagenumber - 1;
+    wx.setStorageSync("PAGENUMBER", pagenumber);
+    if (pagenumber == 0) {
+      let isPrePage = false;
+      wx.showModal({
+        showCancel: false,
+        title: '提示',
+        content: '已经到第一页了',
+        success(res) {
+          if (res.confirm) {
+          }
+        }
+      })
+    }else{
+      this.bindcar();
+    }
+  },
+  //下一页
+  NextPageBtn(){
+    pagenumber = pagenumber + 1;
+    wx.setStorageSync("PAGENUMBER", pagenumber);
+    this.bindcar();
+    console.log(pagenumber);
+    if(pagenumber>=2){
+      let isPrePage = true;
+    }
+  },
+  //某一页
+  JumpPageBtn(){
+    console.log("跳转")
+    console.log(pagenumber)
+    this.bindcar();
 
+  }
 })

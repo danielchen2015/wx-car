@@ -79,7 +79,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    if (wx.getStorageSync("phone")){
+    if (wx.getStorageSync("OPEN_ID")){
       this.setData({
         userInfoBtn:false
       })
@@ -132,7 +132,7 @@ Page({
     if (e.detail){
       let { encryptedData, iv,} = e.detail;
       http({
-        url:"/api/User/loginWxxcx",
+        url:"/api/User/loginWxxcxNew",
         data:{
           code: app.globalData.code,
           encryptedData,
@@ -144,11 +144,12 @@ Page({
             let { openId } = resultMsg;
             getApp().globalData.OPEN_ID = openId;
             wx.setStorageSync("OPEN_ID", openId);
-            wx.setStorageSync("session_key",resultMsg.session_key);
+            //wx.setStorageSync("session_key",resultMsg.session_key);
             wx.setStorageSync("nickName", resultMsg.nickName);
-            that.setData({
-              isPhoneBtn: true
-            })
+            that.addUser();
+            // that.setData({
+            //   isPhoneBtn: true
+            // })
           }
         }
       })
@@ -157,7 +158,7 @@ Page({
     }
   },
   //获取手机号
-  getPhoneNumber: function(e){
+  /*getPhoneNumber: function(e){
     let that = this;
     http({
       url:"/api/User/getUserPhone",
@@ -178,7 +179,7 @@ Page({
         console.log("err",err);
       }
     })
-  },
+  },*/
   //添加用户
   addUser: function(){
     let that = this;
@@ -187,14 +188,20 @@ Page({
       method:"POST",
       data:{
         openid: wx.getStorageSync("OPEN_ID"),
-        mobileno: wx.getStorageSync("phone"),
+        mobileno: "",//wx.getStorageSync("phone"),
         username: wx.getStorageSync("nickName"),
       },
       success: function(res){
         let { resultCode, resultMsg } = res;
         if (resultCode == 200){
           that.getUerInfo()
+          that.setData({
+            isPhoneBtn: false
+          })
         }else{
+          that.setData({
+            isPhoneBtn: false
+          })
           that.getUerInfo()
         }    
       }
@@ -206,13 +213,13 @@ Page({
     http({
       url:"/api/User/info",
       data:{
-        openid: wx.getStorageSync("OPEN_ID"),
-        mobileno: wx.getStorageSync("phone")
+        openid: wx.getStorageSync("OPEN_ID")
+        // mobileno: wx.getStorageSync("phone")
       },
       success: function(res){
         let { resultCode, resultMsg } = res;
         if (resultCode == 200) {
-          let {roleid, mobileno } = resultMsg;
+          let {roleid} = resultMsg;
           that.setData({
             roleid: roleid,
             userInfoBtn: false

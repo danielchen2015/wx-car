@@ -46,9 +46,9 @@
     </view>
   </view>
 </view>
-<view class='c-term' wx:if="{{false}}">
-<button size='mini' disabled='true'>上一页</button>
-<button size='mini' type='primary'>下一页</button>
-<input type='text' class='page-i' size="size"></input>
-<button size='mini'>跳转</button>
+<view class='c-term' wx:if="{{true}}">
+<button size='mini' disabled='{{isPrePage}}' type='primary' bindtap='PrePageBtn'>上一页</button>
+<button size='mini' type='primary' bindtap='NextPageBtn'>下一页</button>
+<input type='text' class='page-i' value="{{pagenumber}}" type="number" bindchange="getPageNumber"></input>
+<button size='mini' bindtap='JumpPageBtn'>跳转</button>
 </view>

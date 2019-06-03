@@ -5,9 +5,6 @@
       <button wx:if="{{!isPhoneBtn}}" class="cu-btn block bg-blue margin-tb-sm lg" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo">
         <text class="iconfont-spin"></text> 登录授权
       </button>
-       <button wx:if="{{isPhoneBtn}}" class="cu-btn block bg-blue margin-tb-sm lg" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
-        <text class="iconfont-spin"></text> 获取手机号登陆并发布
-      </button>
     </view>
   </view>
   <view class='content' wx:else>
